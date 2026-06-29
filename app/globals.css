@@ -1,26 +1,332 @@
 @import "tailwindcss";
 
+/* ─────────────────────────────────────────────────────────────
+   Palette + font CSS vars (raw CSS uses these; @theme maps them
+   to Tailwind utilities below).
+   ───────────────────────────────────────────────────────────── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --paper: #ffffff;
+  --beige: #f0ede5;
+  --blue: #4a6fa5;
+  --blue-soft: #b8c5d6;
+  --ink: #1c2533;
+  --muted: #6b7585;
+
+  /* Display stack: Clash first (self-hosted, may 404 until provided),
+     then the real loaded Bricolage fallback, then system. */
+  --font-display-stack: "Clash Display", var(--font-bricolage), system-ui, sans-serif;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-paper: var(--paper);
+  --color-beige: var(--beige);
+  --color-blue: var(--blue);
+  --color-blueSoft: var(--blue-soft);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+
+  --font-sans: var(--font-dm-sans);
+  --font-mono: var(--font-space-mono);
+  --font-display: var(--font-display-stack);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* ─────────────────────────────────────────────────────────────
+   Self-hosted Clash Display. Drop the woff2 files into
+   public/fonts/ — until then these 404 and the stack falls back
+   to Bricolage Grotesque (loaded via next/font) automatically.
+   ───────────────────────────────────────────────────────────── */
+@font-face {
+  font-family: "Clash Display";
+  src: url("/fonts/ClashDisplay-Semibold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Clash Display";
+  src: url("/fonts/ClashDisplay-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Base
+   ───────────────────────────────────────────────────────────── */
+* {
+  box-sizing: border-box;
+}
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-dm-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  cursor: none;
+  overflow-x: hidden;
+}
+a {
+  color: inherit;
+}
+@media (pointer: fine) {
+  a,
+  button,
+  .burger {
+    cursor: none;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ─────────────────────────────────────────────────────────────
+   Stickers
+   ───────────────────────────────────────────────────────────── */
+.stickers {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+.sticker {
+  position: absolute;
+  pointer-events: auto;
+  will-change: transform;
+}
+.sticker svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.s1 { top: 15vh; left: 7vw;  width: 64px; height: 64px; animation: floA 8s ease-in-out infinite; }
+.s2 { top: 21vh; right: 9vw; width: 50px; height: 50px; animation: floB 9s ease-in-out infinite; }
+.s3 { top: 60vh; left: 6vw;  width: 72px; height: 72px; animation: floC 10.5s ease-in-out infinite; }
+.s4 { top: 42vh; right: 6vw; width: 58px; height: 58px; animation: floA 7.5s ease-in-out infinite reverse; }
+.s5 { bottom: 15vh; left: 13vw; width: 60px; height: 60px; animation: floB 11s ease-in-out infinite; }
+.s6 { top: 30vh; right: 17vw; width: 40px; height: 40px; animation: floC 8.5s ease-in-out infinite; }
+@keyframes floA { 0%, 100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-16px) rotate(10deg); } }
+@keyframes floB { 0%, 100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-12px) rotate(-8deg); } }
+@keyframes floC { 0%, 100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-20px) rotate(6deg); } }
+
+/* ─────────────────────────────────────────────────────────────
+   Bottom-center dock
+   ───────────────────────────────────────────────────────────── */
+.pill {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--ink);
+  border-radius: 17px;
+  padding: 7px;
+  box-shadow: 0 16px 42px -16px rgba(28, 37, 51, 0.6);
+}
+.home {
+  width: 42px;
+  height: 42px;
+  border-radius: 11px;
+  overflow: hidden;
+  display: block;
+  flex: none;
+  box-shadow: inset 0 0 0 2px var(--blue);
+  transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.home:hover {
+  transform: rotate(-3deg) scale(1.04);
+}
+.home img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.home:focus-visible {
+  outline: none;
+  box-shadow: inset 0 0 0 2px var(--blue), 0 0 0 3px rgba(184, 197, 214, 0.7);
+}
+.items {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+.items a {
+  font-family: var(--font-space-mono), monospace;
+  font-size: 12px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--blue-soft);
+  text-decoration: none;
+  padding: 11px 14px;
+  border-radius: 11px;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+.items a:hover,
+.items a:focus-visible {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.07);
+  outline: none;
+}
+.items a.cta {
+  background: var(--blue);
+  color: #fff;
+}
+.items a.cta:hover {
+  background: #3d5f93;
+}
+.burger {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--blue-soft);
+  font-size: 18px;
+  line-height: 1;
+  padding: 11px 13px;
+  border-radius: 11px;
+}
+.burger:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.07);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Centered hero
+   ───────────────────────────────────────────────────────────── */
+.hero {
+  position: relative;
+  z-index: 2;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 120px 24px 168px;
+}
+.heroText {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.heroText.distort {
+  filter: url(#liquid);
+}
+.eyebrow {
+  font-family: var(--font-space-mono), monospace;
+  font-size: 13px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin-bottom: 26px;
+}
+.statement {
+  font-family: var(--font-display-stack);
+  font-weight: 700;
+  color: var(--blue);
+  font-size: clamp(2.6rem, 7.2vw, 6rem);
+  line-height: 1.02;
+  letter-spacing: -0.01em;
+  max-width: 15ch;
+}
+.statement em {
+  font-style: normal;
+  color: var(--ink);
+  position: relative;
+}
+.statement em.scribble::after {
+  content: "";
+  position: absolute;
+  left: -3%;
+  right: -3%;
+  bottom: -0.1em;
+  height: 0.2em;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 24' preserveAspectRatio='none'%3E%3Cpath d='M4 15 C 38 6 70 20 104 12 C 138 5 168 19 196 12' fill='none' stroke='%234A6FA5' stroke-width='6' stroke-linecap='round'/%3E%3C/svg%3E")
+    no-repeat center / 100% 100%;
+}
+.sub {
+  font-family: var(--font-dm-sans), sans-serif;
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--muted);
+  max-width: 44ch;
+  margin: 28px auto 0;
+}
+.status {
+  margin-top: 30px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-space-mono), monospace;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+.status .ping {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--blue);
+  box-shadow: 0 0 0 0 rgba(74, 111, 165, 0.5);
+  animation: ping 2.2s ease-out infinite;
+}
+@keyframes ping {
+  0% { box-shadow: 0 0 0 0 rgba(74, 111, 165, 0.5); }
+  70%, 100% { box-shadow: 0 0 0 9px rgba(74, 111, 165, 0); }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Custom cursor
+   ───────────────────────────────────────────────────────────── */
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  pointer-events: none;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  border: 1.5px solid var(--blue);
+  transform: translate(-50%, -50%);
+  transition: width 0.3s, height 0.3s, background 0.3s, border-color 0.3s;
+  will-change: transform;
+}
+.cursor.grow {
+  width: 52px;
+  height: 52px;
+  background: rgba(74, 111, 165, 0.12);
+  border-color: var(--blue);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Responsive
+   ───────────────────────────────────────────────────────────── */
+@media (max-width: 820px) {
+  .stickers { display: none; }
+}
+@media (max-width: 640px) {
+  .pill { bottom: 18px; }
+  .burger { display: block; }
+  .items {
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    flex-direction: column;
+    align-items: stretch;
+    background: var(--ink);
+    border-radius: 14px;
+    padding: 8px;
+    min-width: 200px;
+    display: none;
+  }
+  .pill.open .items { display: flex; }
+  .items a { padding: 13px 14px; }
+  .hero { padding-bottom: 150px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sticker,
+  .status .ping {
+    animation: none;
+  }
 }
