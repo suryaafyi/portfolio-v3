@@ -6,9 +6,9 @@ import { useState } from "react";
 import { getNav } from "@/lib/nav";
 
 // ── Avatar ────────────────────────────────────────────────────────────────
-// Drop your hand-drawn portrait at public/avatar.png and set AVATAR_SRC to
-// "/avatar.png" — the placeholder monogram below is shown until then.
-const AVATAR_SRC: string | null = null;
+// Hand-drawn portrait lives at public/Avatar.png. Casing must match exactly —
+// Vercel builds on Linux (case-sensitive). Set to null to show the monogram.
+const AVATAR_SRC: string | null = "/Avatar.png";
 
 function Avatar() {
   if (AVATAR_SRC) {
