@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { getNav } from "@/lib/nav";
+import { getNav, type NavItem } from "@/lib/nav";
 
 // ── Avatar ────────────────────────────────────────────────────────────────
 // Hand-drawn portrait lives at public/Avatar.png. Casing must match exactly —
@@ -33,10 +33,16 @@ function Avatar() {
   );
 }
 
-export default function DockNav() {
+export default function DockNav({ items: override }: { items?: NavItem[] } = {}) {
   const pathname = usePathname();
-  const items = getNav(pathname);
+  const items = override ?? getNav(pathname);
   const [open, setOpen] = useState(false);
+
+  // Active = the item whose route matches the current page (dynamic, not a
+  // hard-coded CTA). `.active` wins over `.cta` in CSS.
+  const isActive = (it: NavItem) => !!it.href && it.href === pathname;
+  const cls = (it: NavItem) =>
+    [it.cta ? "cta" : "", isActive(it) ? "active" : ""].filter(Boolean).join(" ");
 
   return (
     <nav className={`pill ${open ? "open" : ""}`} aria-label="Primary">
@@ -55,17 +61,33 @@ export default function DockNav() {
       </button>
 
       <div className="items">
-        {items.map((it) => (
-          <Link
-            key={it.label}
-            href={it.href}
-            data-hover
-            className={it.cta ? "cta" : ""}
-            onClick={() => setOpen(false)}
-          >
-            {it.label}
-          </Link>
-        ))}
+        {items.map((it) =>
+          it.onClick ? (
+            <button
+              key={it.label}
+              type="button"
+              data-hover
+              className={cls(it)}
+              onClick={() => {
+                it.onClick?.();
+                setOpen(false);
+              }}
+            >
+              {it.label}
+            </button>
+          ) : (
+            <Link
+              key={it.label}
+              href={it.href ?? "#"}
+              data-hover
+              className={cls(it)}
+              aria-current={isActive(it) ? "page" : undefined}
+              onClick={() => setOpen(false)}
+            >
+              {it.label}
+            </Link>
+          )
+        )}
       </div>
     </nav>
   );

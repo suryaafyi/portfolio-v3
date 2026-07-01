@@ -36,24 +36,28 @@ export default function Cursor() {
       raf = requestAnimationFrame(loop);
     }
 
-    const grow = () => cur.classList.add("grow");
-    const shrink = () => cur.classList.remove("grow");
-    const hovers = Array.from(document.querySelectorAll<HTMLElement>("[data-hover]"));
-    hovers.forEach((el) => {
-      el.addEventListener("mouseenter", grow);
-      el.addEventListener("mouseleave", shrink);
-    });
+    // Delegated so it works for elements mounted after this effect runs
+    // (e.g. the spiral cards / list rows that toggle in and out on /works).
+    const hovered = (node: EventTarget | null) =>
+      node instanceof Element ? node.closest("[data-hover]") : null;
+    const onOver = (e: MouseEvent) => {
+      if (hovered(e.target)) cur.classList.add("grow");
+    };
+    const onOut = (e: MouseEvent) => {
+      const from = hovered(e.target);
+      if (from && hovered(e.relatedTarget) !== from) cur.classList.remove("grow");
+    };
 
     window.addEventListener("mousemove", onMove);
+    document.addEventListener("mouseover", onOver);
+    document.addEventListener("mouseout", onOut);
     raf = requestAnimationFrame(loop);
 
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener("mousemove", onMove);
-      hovers.forEach((el) => {
-        el.removeEventListener("mouseenter", grow);
-        el.removeEventListener("mouseleave", shrink);
-      });
+      document.removeEventListener("mouseover", onOver);
+      document.removeEventListener("mouseout", onOut);
     };
   }, []);
 
