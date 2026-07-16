@@ -7,8 +7,11 @@ import {
   Anton,
   Abril_Fatface,
   Archivo_Black,
+  Gabarito,
+  Instrument_Sans,
 } from "next/font/google";
 import "./globals.css";
+import HuntPocket from "@/components/hunt/HuntPocket";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -34,6 +37,25 @@ const anton = Anton({ subsets: ["latin"], weight: "400", variable: "--font-anton
 const abril = Abril_Fatface({ subsets: ["latin"], weight: "400", variable: "--font-abril", display: "swap", preload: false });
 const archivo = Archivo_Black({ subsets: ["latin"], weight: "400", variable: "--font-archivo", display: "swap", preload: false });
 
+// The Home splash cycles "Surya" through world scripts (Noto Serif per script);
+// those are loaded on-demand as subset Google Fonts links in SplashIntro.
+
+// /v4 prototype (brandappart direction): Gabarito = closest free match for
+// their "Youth" display face (heavy geometric, round bowls); Instrument Sans
+// stands in for PP Neue Montreal body.
+const gabarito = Gabarito({
+  subsets: ["latin"],
+  variable: "--font-gabarito",
+  display: "swap",
+  preload: false,
+});
+const instrument = Instrument_Sans({
+  subsets: ["latin"],
+  variable: "--font-instrument",
+  display: "swap",
+  preload: false,
+});
+
 export const metadata: Metadata = {
   title: "Surya — Product Designer & Developer",
   description:
@@ -46,9 +68,14 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${dmSans.variable} ${spaceMono.variable} ${bricolage.variable} ${caveat.variable} ${anton.variable} ${abril.variable} ${archivo.variable}`}
+      className={`${dmSans.variable} ${spaceMono.variable} ${bricolage.variable} ${caveat.variable} ${anton.variable} ${abril.variable} ${archivo.variable} ${gabarito.variable} ${instrument.variable}`}
     >
-      <body>{children}</body>
+      <body>
+        {children}
+        <HuntPocket />
+        {/* Site pet (Batch №000) benched for now — doesn't match the vibe yet.
+            Re-enable by importing components/pet/SitePet and mounting it here. */}
+      </body>
     </html>
   );
 }

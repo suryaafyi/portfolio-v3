@@ -33,19 +33,33 @@ function Avatar() {
   );
 }
 
+/**
+ * Two dock modes:
+ * - Home ("/"): the classic bottom-center pill.
+ * - Everywhere else: a left-center vertical rail, collapsed to just the
+ *   avatar + current page; hover / focus / tap expands the full menu.
+ */
 export default function DockNav({ items: override }: { items?: NavItem[] } = {}) {
   const pathname = usePathname();
   const items = override ?? getNav(pathname);
   const [open, setOpen] = useState(false);
+  const side = pathname !== "/";
+  // (no route-change cleanup needed: DockNav is mounted per page, so `open`
+  // resets naturally on navigation)
 
   // Active = the item whose route matches the current page (dynamic, not a
   // hard-coded CTA). `.active` wins over `.cta` in CSS.
   const isActive = (it: NavItem) => !!it.href && it.href === pathname;
+  const activeExists = items.some(isActive);
   const cls = (it: NavItem) =>
     [it.cta ? "cta" : "", isActive(it) ? "active" : ""].filter(Boolean).join(" ");
 
   return (
-    <nav className={`pill ${open ? "open" : ""}`} aria-label="Primary">
+    <nav
+      className={`pill ${side ? "side" : ""} ${side && !activeExists ? "no-active" : ""} ${open ? "open" : ""}`}
+      aria-label="Primary"
+      onMouseLeave={side ? () => setOpen(false) : undefined}
+    >
       <Link href="/" className="home" data-hover aria-label="Surya — home">
         <Avatar />
       </Link>
@@ -61,8 +75,25 @@ export default function DockNav({ items: override }: { items?: NavItem[] } = {})
       </button>
 
       <div className="items">
-        {items.map((it) =>
-          it.onClick ? (
+        {items.map((it) => {
+          // In side mode the current-page chip doubles as the expand toggle
+          // (hover expands on desktop; this covers touch + keyboard).
+          if (side && isActive(it)) {
+            return (
+              <button
+                key={it.label}
+                type="button"
+                data-hover
+                className="active"
+                aria-expanded={open}
+                aria-label={`${it.label} — current page. Toggle menu`}
+                onClick={() => setOpen((o) => !o)}
+              >
+                {it.label}
+              </button>
+            );
+          }
+          return it.onClick ? (
             <button
               key={it.label}
               type="button"
@@ -86,8 +117,8 @@ export default function DockNav({ items: override }: { items?: NavItem[] } = {})
             >
               {it.label}
             </Link>
-          )
-        )}
+          );
+        })}
       </div>
     </nav>
   );

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import HuntSticker from "@/components/hunt/HuntSticker";
 
 // Ransom-note cover title (multi-font), ported from the prototype.
 const RANSOM: { ch: string; font: string; size: number; color: string; bg: string; rot: number }[] = [
@@ -477,6 +478,7 @@ export default function AboutPage() {
             <Link className="btn-lg btn-fill" href="/works" data-hover>See the work →</Link>
             <Link className="btn-lg btn-ghost" href="/contact" data-hover>Get in touch →</Link>
           </div>
+          <HuntSticker id="about" className="hunt-spot-about" />
         </div>
       </section>
     </div>

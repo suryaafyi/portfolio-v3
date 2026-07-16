@@ -9,6 +9,7 @@ export const NAV: Record<string, NavItem[]> = {
     { label: "Works", href: "/works" },
     { label: "About", href: "/about" },
     { label: "Lab", href: "/lab" },
+    { label: "Guestbook", href: "/guestbook" },
     { label: "Contact", href: "/contact" },
   ],
 };

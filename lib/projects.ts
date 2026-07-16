@@ -9,10 +9,15 @@ export type Project = {
   /** Placeholder gradient stops. Swap for real thumb/video paths in /public. */
   from: string;
   to: string;
+  /** Real cover image (public path) — layered over the gradient when set. */
+  cover?: string;
 };
 
-/** Placeholder media until real covers land — `linear-gradient` from the stops. */
-export const gradient = (p: Project) => `linear-gradient(135deg, ${p.from}, ${p.to})`;
+/** Card media — the cover image when present, else the gradient stops. */
+export const gradient = (p: Project) =>
+  p.cover
+    ? `url(${p.cover}) center / cover no-repeat, linear-gradient(135deg, ${p.from}, ${p.to})`
+    : `linear-gradient(135deg, ${p.from}, ${p.to})`;
 
 export const PROJECTS: Project[] = [
   {
@@ -104,6 +109,22 @@ export const PROJECTS: Project[] = [
     ],
     from: "#E8002D",
     to: "#8a0b2b",
+  },
+  {
+    slug: "fero",
+    name: "Fero",
+    tag: "Energy bar branding · AI",
+    year: "2026",
+    role: "Brand Design (AI-native)",
+    blurb:
+      "FERO — untamed energy. A fictional energy-bar brand carried by one mascot: the chill-est predator alive. One tiger, one attitude, a complete identity system — built end-to-end in Recraft.",
+    body: [
+      "Most energy brands scream at you. FERO doesn't have to. The brand is built on one idea — real energy doesn't need to prove itself — and carried by a designer-toy tiger with a permanent half-lidded stare.",
+      "One character, one attitude, stretched across a complete identity: fur-built wordmark, packaging, posters, merch, a street vending machine and a full motion ad. Every asset unmistakably FERO.",
+    ],
+    from: "#ef8632",
+    to: "#2b2118",
+    cover: "/projects/fero/wordmark.webp",
   },
   {
     slug: "portfolio",

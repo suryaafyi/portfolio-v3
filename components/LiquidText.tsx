@@ -3,9 +3,11 @@
 import { useEffect, useRef } from "react";
 
 /**
- * Wraps the hero text and applies an SVG displacement filter ONLY while hovered.
- * The displacement scale ramps up on enter and self-stops after ramping back to
- * zero on leave, so idle text is crisp and no rAF runs when not hovering.
+ * Per-word liquid smear. Words inside are wrapped in `.liq-w` spans (see
+ * <Words/>); hovering a word applies the shared displacement filter to that
+ * word only — the smear follows the cursor from word to word. The scale ramps
+ * up on enter and self-stops after easing back to zero, so idle text is crisp
+ * and no rAF runs when nothing is hovered.
  */
 export default function LiquidText({ children }: { children: React.ReactNode }) {
   const wrapRef = useRef<HTMLDivElement>(null);
@@ -23,6 +25,7 @@ export default function LiquidText({ children }: { children: React.ReactNode }) 
     let dT = 0;
     let ph = 0;
     let raf = 0;
+    let cur: Element | null = null; // the word currently being smeared
 
     function liq() {
       dS += (dT - dS) * 0.12;
@@ -34,27 +37,40 @@ export default function LiquidText({ children }: { children: React.ReactNode }) 
         raf = requestAnimationFrame(liq);
       } else {
         disp!.setAttribute("scale", "0");
-        wrap!.classList.remove("distort");
+        cur?.classList.remove("distort");
+        cur = null;
         raf = 0;
       }
     }
 
-    const onEnter = () => {
-      wrap!.classList.add("distort");
+    const wordOf = (t: EventTarget | null) =>
+      t instanceof Element ? t.closest(".liq-w") : null;
+
+    const onOver = (e: MouseEvent) => {
+      const w = wordOf(e.target);
+      if (!w || w === cur) return;
+      cur?.classList.remove("distort");
+      cur = w;
+      w.classList.add("distort");
       dT = 14;
       if (!raf) liq();
     };
-    const onLeave = () => {
+
+    const onOut = (e: MouseEvent) => {
+      const w = wordOf(e.target);
+      if (!w || w !== cur) return;
+      // still inside the same word (e.g. entering the scribble em)? keep going
+      if (wordOf(e.relatedTarget) === w) return;
       dT = 0;
       if (!raf) liq();
     };
 
-    wrap.addEventListener("mouseenter", onEnter);
-    wrap.addEventListener("mouseleave", onLeave);
+    wrap.addEventListener("mouseover", onOver);
+    wrap.addEventListener("mouseout", onOut);
     return () => {
       cancelAnimationFrame(raf);
-      wrap.removeEventListener("mouseenter", onEnter);
-      wrap.removeEventListener("mouseleave", onLeave);
+      wrap.removeEventListener("mouseover", onOver);
+      wrap.removeEventListener("mouseout", onOut);
     };
   }, []);
 
@@ -85,6 +101,20 @@ export default function LiquidText({ children }: { children: React.ReactNode }) 
       <div ref={wrapRef} className="heroText">
         {children}
       </div>
+    </>
+  );
+}
+
+/** Splits plain text into hoverable `.liq-w` word spans. */
+export function Words({ text }: { text: string }) {
+  return (
+    <>
+      {text.split(" ").map((w, i) => (
+        <span key={i}>
+          {i > 0 ? " " : ""}
+          <span className="liq-w">{w}</span>
+        </span>
+      ))}
     </>
   );
 }

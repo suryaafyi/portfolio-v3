@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import DockNav from "@/components/DockNav";
 import SpiralGallery from "@/components/works/SpiralGallery";
+import HuntSticker from "@/components/hunt/HuntSticker";
 
 export const metadata: Metadata = {
   title: "Works — Surya",
@@ -12,6 +13,7 @@ export default function Works() {
     <>
       <h1 className="sr-only">Selected Works</h1>
       <SpiralGallery />
+      <HuntSticker id="works" className="hunt-spot-works" />
       <DockNav />
     </>
   );

@@ -121,10 +121,26 @@ export default function Block({ block, accent }: { block: BlockType; accent: str
       );
 
     case "image":
-      return (
+      // With `src`: a real asset from public/projects/<slug>/. Without: a
+      // tinted placeholder until the asset lands.
+      return block.src ? (
+        <figure className="cs-image has-img" style={{ background: accent }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={block.src} alt={block.caption} loading="lazy" />
+          <span>{block.caption}</span>
+        </figure>
+      ) : (
         <div className="cs-image" style={{ background: accent }} role="img" aria-label={block.caption}>
           <span>{block.caption}</span>
         </div>
+      );
+
+    case "video":
+      return (
+        <figure className="cs-image has-img cs-video">
+          <video src={block.src} poster={block.poster} controls muted loop playsInline preload="metadata" />
+          <span>{block.caption}</span>
+        </figure>
       );
 
     case "voiceQuotes":

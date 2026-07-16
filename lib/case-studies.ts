@@ -29,7 +29,8 @@ export type Block =
       }[];
     }
   | { type: "table"; headers: string[]; rows: string[][] }
-  | { type: "image"; caption: string }
+  | { type: "image"; caption: string; src?: string }
+  | { type: "video"; caption: string; src: string; poster?: string }
   | { type: "voiceQuotes"; quotes: string[] }
   | { type: "pullQuote"; text: string }
   | { type: "chips"; items: string[] }
@@ -1119,6 +1120,139 @@ export const CASE_STUDIES: Record<string, CaseStudy> = {
         blocks: [
           { type: "paragraph", text: "Stitch's streaming generation and in-place edits are genuinely game-changing for rapid prototyping, but driving it through MCP was the highlight of the whole build. Two things I'd love to see next: design-token syncing across screens, so a global style change propagates everywhere automatically; and a full React export with routing intact, instead of exporting screens individually." },
           { type: "pullQuote", text: "The most interesting part of this project wasn't a screen — it was wiring an AI agent to drive the design tool that drew the screens." },
+        ],
+      },
+    ],
+  },
+  fero: {
+    slug: "fero",
+    title: "FERO — Untamed Energy",
+    accent: "#ef8632",
+    heroBg: "#2b2118",
+    year: "2026",
+    kind: "full",
+    meta: {
+      role: "Brand Designer + AI Direction",
+      team: "Solo Project",
+      timeline: "2026",
+      skills: "Brand Identity, Character Design, Packaging, Motion, Recraft",
+    },
+    tags: ["Branding", "Character Design", "Packaging", "Motion", "Recraft", "AI"],
+    links: [
+      {
+        label: "Full project in Recraft",
+        href: "https://www.recraft.ai/project/e350424f-5c7c-4e2f-829b-600a224c9981",
+      },
+    ],
+    sections: [
+      {
+        num: "01",
+        eyebrow: "The Idea",
+        heading: "Most energy brands scream at you. FERO doesn't have to.",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "FERO is a fictional energy bar built on one idea: real energy doesn't need to prove itself. So instead of another hyped-up mascot throwing lightning bolts and shouting about gains, I built the opposite — the chill-est predator alive. A tiger with a permanent half-lidded stare who's already ahead of you and can't be bothered to mention it.",
+          },
+          { type: "pullQuote", text: "The name says everything: \"easy, tiger\" — too much energy, worn like it's nothing." },
+          {
+            type: "paragraph",
+            text: "Then I built his entire world around him. One character, one attitude, stretched across a complete identity system — every asset unmistakably FERO, from the shelf to the street to the screen.",
+          },
+        ],
+      },
+      {
+        num: "02",
+        eyebrow: "The Character",
+        heading: "A soft-matte designer-toy tiger, quietly convinced he's the best thing in the room.",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "Cute, collectible, and cocky — but never loud. I pushed him through a full expression range so he holds his personality in any moment, not just one pose.",
+          },
+          {
+            type: "cards",
+            items: [
+              { title: "Smug", text: "The default. Half-lidded, already won." },
+              { title: "Hyped", text: "As excited as FERO allows himself to look." },
+              { title: "Unbothered", text: "Your chaos is not his problem." },
+              { title: "Mid-bite", text: "Zero to feral, one frame at a time." },
+            ],
+          },
+          { type: "image", caption: "FERO — THE DESIGNER-TOY TIGER", src: "/projects/fero/mascot.webp" },
+          { type: "image", caption: "THE EXPRESSION RANGE — STICKER SHEET", src: "/projects/fero/stickers.webp" },
+        ],
+      },
+      {
+        num: "03",
+        eyebrow: "The Identity",
+        heading: "His own coat does the branding before a single word is read.",
+        blocks: [
+          {
+            type: "list",
+            items: [
+              "A custom wordmark hand-built from real tiger fur — orange and black, tactile, alive.",
+              "Tiger Orange, Warm Black, Cream — the palette lifted straight off his coat.",
+              "A flat-vector system for the small stuff, a rich 3D world for the hero moments. Two formats, one tiger.",
+            ],
+          },
+          { type: "chips", items: ["Tiger Orange", "Warm Black", "Cream", "Fur wordmark", "Flat + 3D system"] },
+          { type: "image", caption: "THE FUR-BUILT WORDMARK, IN THE WILD", src: "/projects/fero/wordmark.webp" },
+        ],
+      },
+      {
+        num: "04",
+        eyebrow: "The Applications",
+        heading: "FERO in the wild — shelf, street, and screen.",
+        blocks: [
+          {
+            type: "cards",
+            items: [
+              { title: "Packaging", text: "Peanut, Almond & Cranberry. Real fruit, real nuts, zero chill." },
+              { title: "Poster & environmental", text: "FERO in the wild, where he belongs." },
+              { title: "Stickers & merch", text: "The whole personality, ready to stick and wear." },
+              { title: "Vending machine", text: "A custom FERO machine dropped into a real street." },
+              { title: "Motion ad", text: "One bite, zero to feral." },
+            ],
+          },
+          { type: "image", caption: "PACKAGING — PEANUT / ALMOND / CRANBERRY", src: "/projects/fero/package.webp" },
+          { type: "image", caption: "EDITORIAL CAMPAIGN — FERO IN THE WILD", src: "/projects/fero/editorial.webp" },
+          { type: "image", caption: "MERCH — THE TOTE, ON THE STREET", src: "/projects/fero/tote-bag.webp" },
+          { type: "video", caption: "THE MOTION AD — ONE BITE, ZERO TO FERAL", src: "/projects/fero/fero-ad.mp4" },
+          { type: "pullQuote", text: "Some chase energy. You just bite." },
+        ],
+      },
+      {
+        num: "05",
+        eyebrow: "The Point",
+        heading: "One mascot carrying an entire brand.",
+        blocks: [
+          {
+            type: "callout",
+            text: "Same tiger, every touchpoint — packaging, poster, merch, motion, all speaking one language.",
+          },
+          {
+            type: "paragraph",
+            text: "That's the whole game: consistency, attitude, and a world that actually holds together. Built end-to-end in Recraft — character, identity, applications and the motion ad.",
+          },
+        ],
+      },
+      {
+        num: "06",
+        eyebrow: "Character Brief",
+        heading: "Meet FERO.",
+        blocks: [
+          {
+            type: "persona",
+            name: "FERO — the chill-est predator alive",
+            quote: "The strongest move is never looking like you're trying.",
+            background:
+              "A soft-matte designer-toy tiger with a permanent half-lidded stare. Cocky, dry, effortless — and always a step ahead.",
+            goals:
+              "One bite before a skate session, or just walking through the world like he owns it. FERO believes energy isn't something you chase — it's something you already have.",
+            pains: "Loud mascots. Lightning bolts. Anything that looks like trying.",
+            needs: ["Cocky", "Dry", "Effortless", "Confident", "Unbothered"],
+          },
         ],
       },
     ],

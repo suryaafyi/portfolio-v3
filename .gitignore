@@ -42,3 +42,6 @@ next-env.d.ts
 
 # third-party Claude Code skills (installed locally, not part of the project)
 .claude/skills/
+
+# raw design exports (93MB originals; the site uses the processed webps in /public)
+/assets-src/

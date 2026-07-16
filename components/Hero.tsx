@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion, type Transition } from "framer-motion";
-import LiquidText from "./LiquidText";
+import LiquidText, { Words } from "./LiquidText";
 
 export default function Hero() {
   const reduce = useReducedMotion();
@@ -20,15 +20,16 @@ export default function Hero() {
     <header className="hero">
       <LiquidText>
         <motion.div className="eyebrow" {...reveal(0)}>
-          Product Designer &amp; Developer — Chennai, IN
+          <Words text="Product Designer & Developer — Chennai, IN" />
         </motion.div>
         <motion.h1 className="statement" data-hover {...reveal(0.12)}>
-          I design and build digital products that{" "}
-          <em className="scribble">ship</em>.
+          <Words text="I design and build digital products that" />{" "}
+          <span className="liq-w">
+            <em className="scribble">ship</em>.
+          </span>
         </motion.h1>
         <motion.p className="sub" {...reveal(0.24)}>
-          A hybrid of design taste and front-end engineering — I take products
-          from first sketch all the way to deployed.
+          <Words text="A hybrid of design taste and front-end engineering — I take products from first sketch all the way to deployed." />
         </motion.p>
       </LiquidText>
       <motion.div className="status" {...reveal(0.36)}>
