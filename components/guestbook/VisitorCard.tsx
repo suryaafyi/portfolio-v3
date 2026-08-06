@@ -1,5 +1,64 @@
 import type { ReactNode } from "react";
-import { cardBg, penColor, type VisitorCardData } from "@/lib/guestbook";
+import { AVATAR_PALETTE, cardBg, penColor, seedHash, type VisitorCardData } from "@/lib/guestbook";
+
+/* Blob body silhouettes — one is chosen per visitor for a bit of shape variety */
+const BLOB_PATHS = [
+  "M50 8c22 0 40 16 40 40 0 26-18 44-40 44S10 74 10 48 28 8 50 8Z",
+  "M52 8c24-1 40 17 39 42-1 27-20 42-43 42C24 92 9 72 12 45 15 21 30 9 52 8Z",
+  "M50 9c26 0 41 15 41 41 0 25-15 42-41 42-25 0-42-16-42-42C8 24 25 9 50 9Z",
+];
+
+/**
+ * The generated visitor avatar — a glossy goo-blob creature, deterministic from
+ * `seed` (the visitor's name, falling back to their pass number). Purely
+ * decorative, so it's aria-hidden; the name is the real identity on the card.
+ */
+export function CardAvatar({ seed }: { seed: string }) {
+  const h = seedHash(seed);
+  const [hi, main, deep] = AVATAR_PALETTE[h % AVATAR_PALETTE.length];
+  const blob = BLOB_PATHS[(h >>> 3) % BLOB_PATHS.length];
+  const gaze = ((h >>> 6) % 3) - 1; // -1 | 0 | 1 → pupils look left / center / right
+  const mouth = (h >>> 9) % 4;
+  const cheeks = ((h >>> 11) & 1) === 1;
+  const gid = `av-${(h % 100000).toString(36)}`;
+
+  return (
+    <svg className="vc-av-svg" viewBox="0 0 100 100" aria-hidden>
+      <defs>
+        <radialGradient id={gid} cx="36%" cy="30%" r="75%">
+          <stop offset="0%" stopColor={hi} />
+          <stop offset="55%" stopColor={main} />
+          <stop offset="100%" stopColor={deep} />
+        </radialGradient>
+      </defs>
+      <path d={blob} fill={`url(#${gid})`} />
+      {/* glossy top-left highlight for the 3D gel look */}
+      <ellipse cx="37" cy="30" rx="20" ry="14" fill="#fff" opacity="0.28" />
+      {cheeks && (
+        <g fill="#fff" opacity="0.22">
+          <circle cx="30" cy="60" r="7" />
+          <circle cx="70" cy="60" r="7" />
+        </g>
+      )}
+      {/* eyes */}
+      <g fill="#1c1a17">
+        <ellipse cx="39" cy="47" rx="6" ry="7.5" />
+        <ellipse cx="61" cy="47" rx="6" ry="7.5" />
+      </g>
+      <g fill="#fff">
+        <circle cx={37 + gaze * 1.5} cy="44.5" r="2.1" />
+        <circle cx={59 + gaze * 1.5} cy="44.5" r="2.1" />
+      </g>
+      {/* mouth — four expressions */}
+      <g fill="none" stroke="#1c1a17" strokeWidth="3.2" strokeLinecap="round">
+        {mouth === 0 && <path d="M41 64 Q50 73 59 64" />}
+        {mouth === 1 && <path d="M42 65 Q50 70 58 65" />}
+        {mouth === 3 && <path d="M42 66 L58 66" />}
+      </g>
+      {mouth === 2 && <ellipse cx="50" cy="67" rx="4" ry="5" fill="#1c1a17" />}
+    </svg>
+  );
+}
 
 /* Sticker shapes visitors can slap on their card (keys stored in the DB) */
 export const STICKER_ART: Record<string, ReactNode> = {
@@ -94,6 +153,11 @@ export default function VisitorCard({
         <span className="vc-pass">Visitor pass</span>
         <span className="vc-num">№{data.num ? String(data.num).padStart(3, "0") : "···"}</span>
       </header>
+
+      {/* generated pass photo — a goo-blob unique to this visitor */}
+      <span className="vc-av" aria-hidden>
+        <CardAvatar seed={data.name || (data.num ? `n${data.num}` : "")} />
+      </span>
 
       {body ?? (
         <div className="vc-body">

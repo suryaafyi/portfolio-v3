@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-import DockNav from "@/components/DockNav";
-import Cursor from "@/components/Cursor";
 import GuestbookPage from "@/components/guestbook/GuestbookPage";
 
 export const metadata: Metadata = {
@@ -10,11 +8,5 @@ export const metadata: Metadata = {
 };
 
 export default function Guestbook() {
-  return (
-    <>
-      <GuestbookPage />
-      <DockNav />
-      <Cursor />
-    </>
-  );
+  return <GuestbookPage />;
 }

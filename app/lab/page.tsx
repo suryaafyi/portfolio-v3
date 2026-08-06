@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-import DockNav from "@/components/DockNav";
-import Cursor from "@/components/Cursor";
 import LabPage from "@/components/lab/LabPage";
 
 export const metadata: Metadata = {
@@ -13,8 +11,6 @@ export default function Lab() {
   return (
     <>
       <LabPage />
-      <DockNav />
-      <Cursor />
     </>
   );
 }

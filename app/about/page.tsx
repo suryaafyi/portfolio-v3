@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import AboutPage from "@/components/about/AboutPage";
-import DockNav from "@/components/DockNav";
-import Cursor from "@/components/Cursor";
 
 export const metadata: Metadata = {
   title: "About — Surya",
@@ -13,8 +11,6 @@ export default function About() {
   return (
     <>
       <AboutPage />
-      <DockNav />
-      <Cursor />
     </>
   );
 }

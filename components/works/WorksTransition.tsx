@@ -3,7 +3,6 @@
 import { createContext, useCallback, useContext, useRef } from "react";
 import { useRouter } from "next/navigation";
 import gsap from "gsap";
-import Cursor from "@/components/Cursor";
 
 type FlashNav = { go: (href: string) => void };
 const FlashNavContext = createContext<FlashNav>({ go: () => {} });
@@ -52,7 +51,6 @@ export default function WorksTransition({ children }: { children: React.ReactNod
         <div className="flash-grain" />
         <div ref={square} className="flash-square" />
       </div>
-      <Cursor />
     </FlashNavContext.Provider>
   );
 }

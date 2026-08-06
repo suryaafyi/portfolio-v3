@@ -37,6 +37,38 @@ export const PEN_COLORS: { k: string; c: string; label: string }[] = [
 export const cardBg = (k: string) => CARD_COLORS.find((c) => c.k === k)?.bg ?? "#ffffff";
 export const penColor = (k: string) => PEN_COLORS.find((p) => p.k === k)?.c ?? "#1c2533";
 
+/* ── custom avatar ──
+   Each pass gets a glossy little "goo-blob" creature, generated deterministically
+   from the visitor's name (falls back to their pass number). Same name → same
+   face, forever — a lightweight identicon in the site's own goo-pet language. */
+export function seedHash(s: string): number {
+  let h = 2166136261 >>> 0;
+  const str = s && s.trim() ? s.trim().toLowerCase() : "anon";
+  for (let i = 0; i < str.length; i++) {
+    h ^= str.charCodeAt(i);
+    h = Math.imul(h, 16777619);
+  }
+  // avalanche (murmur3 finalizer) so short names spread across the palette
+  h ^= h >>> 15;
+  h = Math.imul(h, 2246822507);
+  h ^= h >>> 13;
+  h = Math.imul(h, 3266489909);
+  h ^= h >>> 16;
+  return h >>> 0;
+}
+
+/* [glossy highlight, main body, deep shadow] — all read on cream/light cards */
+export const AVATAR_PALETTE: [string, string, string][] = [
+  ["#ffd9b0", "#ff7722", "#b8480a"], // orange (site accent)
+  ["#bcc8ff", "#3147e8", "#1b2ba8"], // flash blue
+  ["#f8bcc4", "#cf5666", "#94293a"], // rose
+  ["#a9ecc9", "#2fae7a", "#157049"], // mint
+  ["#ffe6a3", "#e0a92f", "#a4740f"], // butter
+  ["#d8c9ff", "#7b5cff", "#4a31c0"], // violet
+  ["#a0e8e8", "#00a6a6", "#046a6a"], // teal
+  ["#c6ced9", "#586780", "#2c3750"], // slate
+];
+
 export const MAX_STICKERS = 12;
 export const MAX_STROKES = 60;
 

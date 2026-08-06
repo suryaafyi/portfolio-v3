@@ -169,7 +169,7 @@ export const CASE_STUDIES: Record<string, CaseStudy> = {
         eyebrow: "Ideate",
         heading: "Exploring solutions and shaping the family experience.",
         blocks: [
-          { type: "image", caption: "USER JOURNEY" },
+          { type: "image", caption: "USER JOURNEY — the home screen, built around upcoming moments and recent memories", src: "/projects/knot/journey.webp" },
           { type: "subheading", text: "Strategic Design Decisions" },
           {
             type: "qa",
@@ -188,7 +188,7 @@ export const CASE_STUDIES: Record<string, CaseStudy> = {
         heading: "Starting with pen, not pixels.",
         blocks: [
           { type: "paragraph", text: "Before structure and polish, ideas were explored quickly — focusing on flows, relationships, and how memories should feel." },
-          { type: "image", caption: "WIREFRAME FLOWS" },
+          { type: "image", caption: "WIREFRAME FLOWS — trip memories, shared albums and the memory search, laid out across the core screens", src: "/projects/knot/wireframes.webp" },
           { type: "callout", text: "Clarity over complexity. Every screen had a purpose." },
         ],
       },
@@ -198,7 +198,7 @@ export const CASE_STUDIES: Record<string, CaseStudy> = {
         heading: "A system designed to feel calm, personal, and expressive.",
         blocks: [
           { type: "paragraph", text: "Soft tones, thoughtful typography, and subtle depth create an experience that feels intimate — not overwhelming." },
-          { type: "image", caption: "UI DESIGN SCREENS" },
+          { type: "image", caption: "UI DESIGN SCREENS — the type scale and palette that carry the calm, personal tone", src: "/projects/knot/visual-design.webp" },
         ],
       },
       {
@@ -334,7 +334,7 @@ export const CASE_STUDIES: Record<string, CaseStudy> = {
         num: "05",
         eyebrow: "Ideate",
         heading: "Transforming insights into structured solutions.",
-        blocks: [{ type: "image", caption: "USER JOURNEY MAP" }],
+        blocks: [{ type: "image", caption: "USER JOURNEY MAP — home, task list and analytics laid out as one continuous flow", src: "/projects/zendo/journey.webp" }],
       },
       {
         num: "06",
@@ -342,7 +342,7 @@ export const CASE_STUDIES: Record<string, CaseStudy> = {
         heading: "From structure to screens.",
         blocks: [
           { type: "paragraph", text: "Low-fidelity wireframes were created to explore layout, structure, and user flows before moving into visual design." },
-          { type: "image", caption: "WIREFRAME GRID" },
+          { type: "image", caption: "WIREFRAME GRID — the home screen's streak, task list and focus-time structure", src: "/projects/zendo/wireframes.webp" },
           { type: "callout", text: "Iterating at low fidelity allowed us to discard heavy UI patterns and focus entirely on the spatial relationship between a user's task and their focus." },
         ],
       },
@@ -352,7 +352,7 @@ export const CASE_STUDIES: Record<string, CaseStudy> = {
         heading: "Designing for calm, clarity, and focus.",
         blocks: [
           { type: "paragraph", text: "The visual system is designed to reduce cognitive load, promote calmness, and support deep focus through minimal and intentional design choices." },
-          { type: "image", caption: "UI DESIGN SYSTEM" },
+          { type: "image", caption: "UI DESIGN SYSTEM — home, analytics, streaks and progress across the full screen set", src: "/projects/zendo/visual-design.webp" },
         ],
       },
       {
@@ -536,7 +536,7 @@ export const CASE_STUDIES: Record<string, CaseStudy> = {
         eyebrow: "Ideate",
         heading: "Translating insights into structured solutions.",
         blocks: [
-          { type: "image", caption: "USER JOURNEY MAP" },
+          { type: "image", caption: "USER JOURNEY MAP — job search, recommended roles and salary range surfaced up front", src: "/projects/shift/journey.webp" },
           { type: "subheading", text: "Key Product Directions" },
           { type: "chips", items: ["Guided Career Path", "Skill Gap Intelligence", "Smart Resume Builder", "Application Tracker", "Interview Preparation"] },
         ],
@@ -554,7 +554,7 @@ export const CASE_STUDIES: Record<string, CaseStudy> = {
               "High-Fidelity Designs — clean minimal visual system, reduced cognitive load",
             ],
           },
-          { type: "image", caption: "SKETCHES → WIREFRAMES → HI-FI" },
+          { type: "image", caption: "SKETCHES → WIREFRAMES → HI-FI — job details, from skills match to a one-tap apply", src: "/projects/shift/wireframes.webp" },
         ],
       },
       {
@@ -563,7 +563,7 @@ export const CASE_STUDIES: Record<string, CaseStudy> = {
         heading: "A system built for clarity and calm.",
         blocks: [
           { type: "paragraph", text: "Soft color gradients, rounded cards, and clear visual hierarchy create a calm experience that allows users to focus on career progress without feeling overwhelmed." },
-          { type: "image", caption: "DESIGN SYSTEM / UI KIT" },
+          { type: "image", caption: "DESIGN SYSTEM / UI KIT — resume templates, styled to match the calm, rounded system", src: "/projects/shift/visual-design.webp" },
         ],
       },
       {
@@ -692,7 +692,7 @@ export const CASE_STUDIES: Record<string, CaseStudy> = {
         blocks: [
           { type: "paragraph", text: "The result screen IS the answer. Full bleed in the cry reason's color. Blob character fills the top half. One giant word. One action. That's it." },
           { type: "paragraph", text: "Two themes set the tone: soft blush for the girl theme (#FFE4EE) and soft sky for the boy theme (#DFF0FF)." },
-          { type: "image", caption: "BLOB CHARACTERS COLLAGE" },
+          { type: "image", caption: "WAAAH, ON THE HOME SCREEN", src: "/projects/waaah/app-icon.webp" },
           { type: "paragraph", text: "Blob characters — custom characters created to express the exact emotion of the cry reason. They are the heart of the product, helping parents feel the result instantly." },
         ],
       },
@@ -770,6 +770,111 @@ export const CASE_STUDIES: Record<string, CaseStudy> = {
     ],
   },
 
+  "sk-fitness": {
+    slug: "sk-fitness",
+    title: "SK Fitness Studio — Turning local searches into booked trials",
+    accent: "#e8462a",
+    heroBg: "#171412",
+    year: "2026",
+    kind: "linkout",
+    meta: {
+      role: "Design + Build (AI-native)",
+      team: "Client Work",
+      timeline: "~1 week",
+      skills: "Web Design, Conversion Copy, Base44, Local SEO",
+    },
+    tags: ["Client Work", "Web Design", "AI-native", "Live in Production"],
+    links: [
+      { label: "Visit the site", href: "https://sk-fitness-studio.base44.app/" },
+      { label: "View on Contra", href: "https://on.contra.com/D7HMJ6" },
+    ],
+    sections: [
+      {
+        num: "01",
+        eyebrow: "Overview",
+        heading: "A gym storefront, not a listing.",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "SK Fitness Studio is a unisex strength & cardio gym in Chinnadharapuram, Karur. Before this, the only way to find them online was a maps pin — no hours, no pricing, no way to commit. The brief was simple: give a local walk-in every answer they need, then make the next step obvious.",
+          },
+          {
+            type: "chips",
+            items: ["Base44", "Conversion copy", "Mobile-first", "WhatsApp-first"],
+          },
+        ],
+      },
+      {
+        num: "02",
+        eyebrow: "The problem",
+        heading: "Three questions decide a gym sign-up.",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "Talking through how enquiries actually arrive, the same three questions came up every time — and none of them had an answer online.",
+          },
+          {
+            type: "list",
+            ordered: true,
+            items: [
+              "What does it cost? — no published pricing meant every enquiry started with a price negotiation.",
+              "When can I come? — timings were word-of-mouth, so people showed up to a closed shutter.",
+              "Can I try it first? — the strongest hook the studio had was a free trial nobody knew about.",
+            ],
+          },
+        ],
+      },
+      {
+        num: "03",
+        eyebrow: "The approach",
+        heading: "Lead with the free trial. Answer everything else fast.",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "The hero states the offer plainly — walk in, meet a coach, train a full session, the first one's on us — with a book-a-free-trial button and a WhatsApp tap side by side, because in a small town WhatsApp is the real contact form.",
+          },
+          {
+            type: "cards",
+            items: [
+              { title: "Programs", text: "Weight loss, strength/muscle gain and cardio — each with a plain-language goal, not a machine list." },
+              { title: "Inside SK", text: "Six numbered zone cards — personal training, weight loss, muscle gain, cardio, free weights, open gym." },
+              { title: "Schedule", text: "Two sessions, stated once: 6–10 AM and 4–10 PM, every day." },
+              { title: "Pricing", text: "Four tiers from ₹1,000/month to ₹10,000/year, with the savings spelled out on each." },
+            ],
+          },
+          {
+            type: "callout",
+            text: "No hidden fees. Publishing the full price ladder up front removed the single biggest reason people never walked in.",
+          },
+          { type: "image", caption: "Programs — weight loss, muscle gain and cardio, stated as goals, not equipment lists", src: "/projects/sk-fitness/programs.webp" },
+        ],
+      },
+      {
+        num: "04",
+        eyebrow: "Design",
+        heading: "Gym-poster energy, phone-first mechanics.",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "The identity leans into big condensed type and high-contrast blocks — the language of a gym poster on a wall — with marquee strips (STRENGTH ✦ CARDIO ✦ UNISEX ✦ NO EXCUSES) carrying momentum between sections. Counters, a floor gallery and member stories do the proof work.",
+          },
+          {
+            type: "stats",
+            items: [
+              { value: "4", label: "Pricing tiers, all public" },
+              { value: "2", label: "Daily sessions, 6AM–10PM" },
+              { value: "1", label: "Tap to WhatsApp from anywhere" },
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "Almost every visitor arrives on a phone from a local search, so the whole layout is built mobile-first: sticky calls to action, thumb-reachable buttons, and no form standing between someone and a free trial.",
+          },
+          { type: "image", caption: "Book a session — name, goal and session window, then straight to a free trial", src: "/projects/sk-fitness/booking.webp" },
+        ],
+      },
+    ],
+  },
   portfolio: {
     slug: "portfolio",
     title: "By Bharath — A Cinematic Editor Portfolio",
@@ -793,6 +898,7 @@ export const CASE_STUDIES: Record<string, CaseStudy> = {
           { type: "paragraph", text: "A cinematic, immersive portfolio for a video editor — full-screen transitions, scroll-driven video reveals, and motion-heavy storytelling. My first paid client build, shipped and live in production." },
           { type: "chips", items: ["Next.js", "GSAP", "TypeScript", "Vercel"] },
           { type: "callout", text: "finally live and it's actually clean af 🔥 big W — Bharath, Video Editor & Content Creator (verified client)" },
+          { type: "image", caption: "Home — 'Frames that refuse to be forgotten,' full-screen and motion-heavy from the first scroll", src: "/projects/portfolio/home.webp" },
         ],
       },
     ],
@@ -822,7 +928,11 @@ export const CASE_STUDIES: Record<string, CaseStudy> = {
         blocks: [
           { type: "paragraph", text: "Afterword is a digital legacy app: a calm, private place to record your stories, your voice, your wisdom and the practical things your family will need — and to deliver them to specific people at exactly the right moment. Not after-the-fact estate admin. The warm, human version of 'there are things I always meant to tell you.'" },
           { type: "callout", text: "Leave them everything. Your stories, your wisdom, your voice — preserved forever for the people who matter most." },
-          { type: "image", caption: "Splash — the 'Afterword' serif wordmark over 'Leave them everything.'" },
+          {
+            type: "image",
+            caption: "Onboarding — 'Who are you building this for?' The first question is never your email or password.",
+            src: "/projects/afterword/cover.webp",
+          },
         ],
       },
       {
@@ -892,7 +1002,16 @@ export const CASE_STUDIES: Record<string, CaseStudy> = {
               { title: "Vault (Practical)", text: "The essentials family will need: medical, legal, financial, insurance, property, passwords, last wishes, contacts." },
             ],
           },
-          { type: "image", caption: "Legacy Home — chapter cards under 'Your legacy · 34 stories · 12 memories'" },
+          {
+            type: "image",
+            caption: "My Story — chapters live in the Scholar italic type, shared with specific people from a single toggle list.",
+            src: "/projects/afterword/story.webp",
+          },
+          {
+            type: "image",
+            caption: "Life Timeline — a chronological view of every story, memory and capsule, logged through quick-add chips like 'Got married' or 'Moved to a new city.'",
+            src: "/projects/afterword/timeline.webp",
+          },
         ],
       },
       {
@@ -911,7 +1030,7 @@ export const CASE_STUDIES: Record<string, CaseStudy> = {
           { type: "subheading", text: "Care Packages" },
           { type: "paragraph", text: "Per-recipient curation. For each person you see what they have vs what they're missing, and toggle exactly what's shared (Memories on, Stories on, Financial overview off…). 'A curated gift for each person.'" },
           { type: "image", caption: "Letter Composer — the perforated postage-stamp card with the AFTERWORD postmark" },
-          { type: "image", caption: "Capsule Opening — the envelope, wax seal, 'From Surya, on your wedding day'" },
+          { type: "image", caption: "Capsules — 'Sealed until the moment arrives,' each with its own delivery trigger", src: "/projects/afterword/capsules.webp" },
         ],
       },
       {
@@ -931,6 +1050,11 @@ export const CASE_STUDIES: Record<string, CaseStudy> = {
             ],
           },
           { type: "image", caption: "Recipient holding screen — 'Surya has something waiting for you. You'll know when it's time.'" },
+          {
+            type: "image",
+            caption: "Preview as them — before anything is shared, step into any recipient's full view to check every tab and every piece of content.",
+            src: "/projects/afterword/people.webp",
+          },
         ],
       },
       {
@@ -941,7 +1065,7 @@ export const CASE_STUDIES: Record<string, CaseStudy> = {
           { type: "paragraph", text: "The delivery trigger is a check-in system ('death switch'), designed to feel caring rather than clinical. In onboarding you set a rhythm (30 / 60 / 90 days or 6 months) and name a trusted person. You periodically tap 'I'm here.' If you go quiet, Afterword escalates gently — 'We haven't heard from you,' a soft countdown, a heads-up — and only contacts your trusted person as a last resort." },
           { type: "callout", text: "You'll always get a heads-up first. Your trusted person only hears from us if we genuinely can't reach you." },
           { type: "paragraph", text: "Notifications match that tone — 'It's been 60 days. A quick tap lets your loved ones know you're here.' — never alarmist." },
-          { type: "image", caption: "Onboarding done — 'Vault owner · Surya / Trusted person · Avantika / Check-in every · 60 days'" },
+          { type: "image", caption: "Home — chapters, memories and loved ones, with the check-in rhythm running quietly underneath", src: "/projects/afterword/checkin.webp" },
         ],
       },
       {
@@ -1001,7 +1125,7 @@ export const CASE_STUDIES: Record<string, CaseStudy> = {
         blocks: [
           { type: "paragraph", text: "The FIFA World Cup 2026 Live Dashboard is a broadcast-grade, six-page tournament experience — 104 match fixtures, animated Panini-style player cards, a CSS knockout-bracket visualizer, and live tournament-state logic — designed to feel like a FIFA+ broadcast. Every screen was generated with Google Stitch and shipped on Netlify." },
           { type: "callout", text: "The goal wasn't a pretty mockup — it was a real, deployed, real-time-aware product that looks like it came off a broadcast graphics desk." },
-          { type: "image", caption: "Home hero — the broadcast-style landing with the live tournament state" },
+          { type: "image", caption: "Home hero — the broadcast-style landing with the live tournament state", src: "/projects/fwc/home-hero.webp" },
         ],
       },
       {
@@ -1035,7 +1159,7 @@ export const CASE_STUDIES: Record<string, CaseStudy> = {
               { title: "Collectible nostalgia", text: "Animated Panini-style player cards as the signature flourish." },
             ],
           },
-          { type: "image", caption: "The cyberpunk → FIFA-broadcast redesign of the home hero (before / after)" },
+          { type: "image", caption: "The home hero after the cyberpunk → FIFA-broadcast redesign", src: "/projects/fwc/home-hero.webp" },
         ],
       },
       {
@@ -1055,8 +1179,8 @@ export const CASE_STUDIES: Record<string, CaseStudy> = {
               { title: "Live match detail", text: "The single-match broadcast view." },
             ],
           },
-          { type: "image", caption: "Fixtures grid — the 104-match cards" },
-          { type: "image", caption: "Knockout bracket — the CSS bracket with animated connectors" },
+          { type: "image", caption: "Fixtures grid — the 104-match cards", src: "/projects/fwc/matches.webp" },
+          { type: "image", caption: "Groups — the eight-team pools, color-coded by group", src: "/projects/fwc/groups.webp" },
         ],
       },
       {
@@ -1085,7 +1209,7 @@ export const CASE_STUDIES: Record<string, CaseStudy> = {
         heading: "Making it feel live.",
         blocks: [
           { type: "paragraph", text: "The 'alive' requirement, delivered in the details: animated Panini-style player cards, CSS-drawn bracket connectors that animate between rounds, live tournament-state logic driving what each screen shows, and broadcast-style motion and hover states across the pages — all HTML-native, no heavy framework." },
-          { type: "image", caption: "Player card — the animated Panini-style collectible in motion" },
+          { type: "image", caption: "Player card — the animated Panini-style collectible in motion", src: "/projects/fwc/cover.webp" },
         ],
       },
       {

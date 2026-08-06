@@ -1,10 +1,12 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { PROJECTS, gradient } from "@/lib/projects";
+import { PROJECTS, gradient, spiralGradient } from "@/lib/projects";
 import { ribbonLayout } from "@/lib/ribbon";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { useFlashNav } from "./WorksTransition";
+import SiteFooter from "@/components/v4/SiteFooter";
+import { getLenis } from "@/lib/lenis";
 
 type View = "spiral" | "list";
 
@@ -15,8 +17,8 @@ const PARALLAX = 1;
 const AUTOPLAY = true;
 const DRIFT = 0.00013; // base auto-travel per ms
 
-const YEARS = PROJECTS.map((p) => Number(p.year));
-const YEAR_RANGE = `${Math.min(...YEARS)}—${Math.max(...YEARS)}`;
+/** "Genealogy · UX research" → "Genealogy" (ba shows one short sector word) */
+const sectorOf = (tag: string) => tag.split("·")[0].trim();
 
 export default function SpiralGallery() {
   // Dense 3D drag-spiral is rough on small / touch screens — default to list.
@@ -24,6 +26,84 @@ export default function SpiralGallery() {
   const [override, setOverride] = useState<View | null>(null);
   const view: View = override ?? (compact ? "list" : "spiral");
   const { go } = useFlashNav();
+
+  // list view: the project nearest the middle of the screen is the active one
+  const [active, setActive] = useState(0);
+  const rowEls = useRef<(HTMLButtonElement | null)[]>([]);
+
+  // SCROLL-driven (not hover): media/mark/meta are pinned to the viewport
+  // centre, so whichever name scrolls through the middle becomes active.
+  // An IntersectionObserver with a zero-height root (rootMargin -50%/-50%)
+  // is a detection LINE across the viewport centre — no scroll listener and
+  // no requestAnimationFrame (which browsers pause in background tabs).
+  useEffect(() => {
+    if (view !== "list") return;
+    const rows = rowEls.current.filter(Boolean) as HTMLButtonElement[];
+    if (!rows.length) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (!e.isIntersecting) continue;
+          const i = rows.indexOf(e.target as HTMLButtonElement);
+          if (i >= 0) setActive(i);
+        }
+      },
+      { rootMargin: "-50% 0px -50% 0px", threshold: 0 }
+    );
+    rows.forEach((r) => io.observe(r));
+    return () => io.disconnect();
+  }, [view]);
+
+  // Magnetic pull: when scrolling settles, ease the nearest name to the exact
+  // centre. Driven through the shared Lenis instance so it doesn't fight the
+  // site's smooth scroll (a native scrollTo would).
+  useEffect(() => {
+    if (view !== "list") return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    let snapping = false;
+    const settle = () => {
+      const lenis = getLenis();
+      if (!lenis) return;
+      const mid = window.innerHeight / 2;
+      let delta = 0;
+      let bestD = Infinity;
+      rowEls.current.forEach((el) => {
+        if (!el) return;
+        const r = el.getBoundingClientRect();
+        const d = r.top + r.height / 2 - mid;
+        if (Math.abs(d) < bestD) {
+          bestD = Math.abs(d);
+          delta = d;
+        }
+      });
+      if (bestD < 1.5) return; // already centred
+      snapping = true;
+      lenis.scrollTo(window.scrollY + delta, {
+        duration: 0.75,
+        easing: (t: number) => 1 - Math.pow(1 - t, 3),
+        onComplete: () => {
+          snapping = false;
+        },
+      });
+    };
+    const onScroll = () => {
+      if (snapping) return; // don't re-trigger off our own snap
+      clearTimeout(timer);
+      timer = setTimeout(settle, 130);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, [view]);
+
+  // switching views resets the scroll (spiral is a locked viewport)
+  const setView = (v: View) => {
+    setOverride(v);
+    window.scrollTo(0, 0);
+  };
   // Keep a live ref so the (mount-once) pointer loop always calls the latest go.
   const goRef = useRef(go);
   useEffect(() => {
@@ -136,11 +216,15 @@ export default function SpiralGallery() {
         st.thov[i] = 1;
         const c = caps[i];
         if (c) c.style.opacity = "1";
+        const nm = card.querySelector<HTMLElement>(".sg-media-name");
+        if (nm) nm.style.opacity = "1";
       };
       const lv = () => {
         st.thov[i] = 0;
         const c = caps[i];
         if (c) c.style.opacity = "0";
+        const nm = card.querySelector<HTMLElement>(".sg-media-name");
+        if (nm) nm.style.opacity = "0";
       };
       enter[i] = en;
       leave[i] = lv;
@@ -216,7 +300,7 @@ export default function SpiralGallery() {
   }, []);
 
   return (
-    <div className="sg-page">
+    <div className={`sg-page ${view === "list" ? "sg-page--list" : ""}`}>
       <div ref={stageRef} className="sg-stage" aria-hidden>
         <div ref={worldRef} className="sg-world">
           {PROJECTS.map((p, i) => (
@@ -229,8 +313,8 @@ export default function SpiralGallery() {
               data-hover
               data-slug={p.slug}
             >
-              <div className="sg-media" style={{ background: gradient(p) }}>
-                {p.name}
+              <div className="sg-media" style={{ background: spiralGradient(p) }}>
+                <span className="sg-media-name">{p.name}</span>
               </div>
               <div
                 ref={(el) => {
@@ -247,59 +331,102 @@ export default function SpiralGallery() {
         </div>
       </div>
 
+      {/* list view — brandappart-style stacked index: muted names, the hovered
+          one inked, with the project media + meta tracking it */}
       {view === "list" && (
-        <div className="sg-list">
-          <div className="sg-list-head">
-            <span>Index</span>
-            <span>
-              {PROJECTS.length} projects ✲ {YEAR_RANGE}
-            </span>
+        <>
+          {/* pinned to the viewport centre — the names scroll past them */}
+          <div className="sg-lv-mark" aria-hidden>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/Avatar.png" alt="" />
+            <span>×</span>
           </div>
-          {PROJECTS.map((p, i) => (
-            <button
-              key={p.slug}
-              type="button"
-              className="sg-row"
-              data-hover
-              onClick={() => go(`/works/${p.slug}`)}
-            >
-              <span className="num">{String(i + 1).padStart(2, "0")}</span>
-              <span className="sw" style={{ background: gradient(p) }} />
-              <span className="ti">{p.name}</span>
-              <span className="ca">{p.tag}</span>
-              <span className="yr">{p.year}</span>
-            </button>
-          ))}
-        </div>
+          <div className="sg-lv-media" aria-hidden>
+            {PROJECTS.map((p, i) => (
+              <span
+                key={p.slug}
+                className={i === active ? "is-on" : ""}
+                style={{ background: gradient(p) }}
+              />
+            ))}
+          </div>
+          <div className="sg-lv-meta">
+            <div>
+              <small>Year</small>
+              <strong>{PROJECTS[active].year}</strong>
+            </div>
+            <div>
+              <small>Sector</small>
+              <strong>{sectorOf(PROJECTS[active].tag)}</strong>
+            </div>
+          </div>
+
+          <div className="sg-lv">
+            <div className="sg-lv-inner">
+              <ul className="sg-lv-names">
+                {PROJECTS.map((p, i) => (
+                  <li key={p.slug}>
+                    <button
+                      type="button"
+                      ref={(el) => {
+                        rowEls.current[i] = el;
+                      }}
+                      className={`sg-lv-name ${i === active ? "is-active" : ""}`}
+                      onClick={() => go(`/works/${p.slug}`)}
+                      data-hover
+                      data-cursor="View case"
+                    >
+                      {p.name}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          <SiteFooter />
+        </>
       )}
 
-      <div className="sg-toggle" role="group" aria-label="View mode">
+      {/* bottom pill switch, like the reference */}
+      <div className="sg-switch" role="group" aria-label="View mode">
         <button
           type="button"
-          data-view="spiral"
-          className={view === "spiral" ? "active" : ""}
+          className={view === "spiral" ? "is-on" : ""}
           aria-pressed={view === "spiral"}
           data-hover
-          onClick={() => setOverride("spiral")}
+          onClick={() => setView("spiral")}
         >
-          spiral
+          <svg viewBox="0 0 24 24" aria-hidden>
+            <path
+              d="M12 21a9 9 0 1 1 9-9 7 7 0 0 1-7 7 5 5 0 0 1-5-5 3 3 0 0 1 3-3 1.6 1.6 0 0 1 1.6 1.6"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.9"
+              strokeLinecap="round"
+            />
+          </svg>
+          Spiral View
         </button>
-        <span className="sg-dot" aria-hidden />
         <button
           type="button"
-          data-view="list"
-          className={view === "list" ? "active" : ""}
+          className={view === "list" ? "is-on" : ""}
           aria-pressed={view === "list"}
           data-hover
-          onClick={() => setOverride("list")}
+          onClick={() => setView("list")}
         >
-          list
+          <svg viewBox="0 0 24 24" aria-hidden>
+            <path d="M4 6.4h16M4 12h16M4 17.6h16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+          </svg>
+          List view
         </button>
       </div>
 
-      <div className="sg-hint" aria-hidden>
-        drag or scroll to travel
-      </div>
+      {view === "spiral" && (
+        <div className="sg-hint" aria-hidden>
+          drag or scroll to travel
+        </div>
+      )}
     </div>
   );
 }

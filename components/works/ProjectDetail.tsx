@@ -5,7 +5,6 @@ import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useLenis } from "@/hooks/useLenis";
-import DockNav from "@/components/DockNav";
 import Block from "./Block";
 import { useFlashNav } from "./WorksTransition";
 import type { CaseStudy } from "@/lib/case-studies";
@@ -54,11 +53,6 @@ export default function ProjectDetail({ study, name, next }: Props) {
     return () => ctx.revert();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [study.slug]);
-
-  const dockItems = [
-    { label: "← Works", onClick: () => go("/works") },
-    { label: "Next →", onClick: () => go(`/works/${next.slug}`) },
-  ];
 
   const toSection = (num: string) => {
     document.getElementById(`sec-${num}`)?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -202,7 +196,15 @@ export default function ProjectDetail({ study, name, next }: Props) {
         </Link>
       </footer>
 
-      <DockNav items={dockItems} />
+      {/* prev/next bar — replaces the retired DockNav */}
+      <nav className="detail-nav" aria-label="Case study navigation">
+        <button type="button" onClick={() => go("/works")} data-hover>
+          ← All works
+        </button>
+        <button type="button" onClick={() => go(`/works/${next.slug}`)} data-hover>
+          Next: {next.name} →
+        </button>
+      </nav>
     </div>
   );
 }

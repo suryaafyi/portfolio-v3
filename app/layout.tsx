@@ -11,7 +11,7 @@ import {
   Instrument_Sans,
 } from "next/font/google";
 import "./globals.css";
-import HuntPocket from "@/components/hunt/HuntPocket";
+import SiteChrome from "@/components/v4/SiteChrome";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -40,9 +40,9 @@ const archivo = Archivo_Black({ subsets: ["latin"], weight: "400", variable: "--
 // The Home splash cycles "Surya" through world scripts (Noto Serif per script);
 // those are loaded on-demand as subset Google Fonts links in SplashIntro.
 
-// /v4 prototype (brandappart direction): Gabarito = closest free match for
-// their "Youth" display face (heavy geometric, round bowls); Instrument Sans
-// stands in for PP Neue Montreal body.
+// Display + body faces: Gabarito = closest free match for ba's "Youth"
+// display face (heavy geometric, round bowls); Instrument Sans stands in
+// for PP Neue Montreal.
 const gabarito = Gabarito({
   subsets: ["latin"],
   variable: "--font-gabarito",
@@ -70,11 +70,10 @@ export default function RootLayout({
       lang="en"
       className={`${dmSans.variable} ${spaceMono.variable} ${bricolage.variable} ${caveat.variable} ${anton.variable} ${abril.variable} ${archivo.variable} ${gabarito.variable} ${instrument.variable}`}
     >
-      <body>
+      {/* .v4 = the site-wide design scope (cream bg, Instrument body, cursor) */}
+      <body className="v4">
         {children}
-        <HuntPocket />
-        {/* Site pet (Batch №000) benched for now — doesn't match the vibe yet.
-            Re-enable by importing components/pet/SitePet and mounting it here. */}
+        <SiteChrome />
       </body>
     </html>
   );

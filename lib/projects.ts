@@ -11,13 +11,32 @@ export type Project = {
   to: string;
   /** Real cover image (public path) — layered over the gradient when set. */
   cover?: string;
+  /** Optional dedicated crop for the /works spiral's landscape (1.56:1) tile —
+   *  set when `cover` is a portrait shot that centre-crops badly at that ratio
+   *  (e.g. shows mostly empty mockup margin). Falls back to `cover`. */
+  spiralCover?: string;
 };
 
-/** Card media — the cover image when present, else the gradient stops. */
+/** Card media — the cover image when present, else the gradient stops. Used
+ *  by the /works list view and case-study covers — real photos belong there. */
 export const gradient = (p: Project) =>
   p.cover
     ? `url(${p.cover}) center / cover no-repeat, linear-gradient(135deg, ${p.from}, ${p.to})`
     : `linear-gradient(135deg, ${p.from}, ${p.to})`;
+
+/** Gradient only, never the cover photo — for decorative spots (the /works
+ *  spiral, the home wheel) that should stay bold color, not real screenshots. */
+export const gradientOnly = (p: Project) => `linear-gradient(135deg, ${p.from}, ${p.to})`;
+
+/** Card media for the /works spiral tile specifically — prefers a dedicated
+ *  spiral crop (see `spiralCover`) over the general `cover`, since the
+ *  spiral's card is a wide landscape shape most portrait covers don't fit. */
+export const spiralGradient = (p: Project) => {
+  const src = p.spiralCover ?? p.cover;
+  return src
+    ? `url(${src}) center / cover no-repeat, linear-gradient(135deg, ${p.from}, ${p.to})`
+    : `linear-gradient(135deg, ${p.from}, ${p.to})`;
+};
 
 export const PROJECTS: Project[] = [
   {
@@ -34,6 +53,7 @@ export const PROJECTS: Project[] = [
     ],
     from: "#4A6FA5",
     to: "#B8C5D6",
+    cover: "/projects/knot/cover.webp",
   },
   {
     slug: "zendo",
@@ -49,6 +69,7 @@ export const PROJECTS: Project[] = [
     ],
     from: "#E8A87C",
     to: "#F0EDE5",
+    cover: "/projects/zendo/cover.webp",
   },
   {
     slug: "shift",
@@ -64,6 +85,8 @@ export const PROJECTS: Project[] = [
     ],
     from: "#27344a",
     to: "#4A6FA5",
+    cover: "/projects/shift/hero.webp",
+    spiralCover: "/projects/shift/spiral.webp",
   },
   {
     slug: "afterword",
@@ -79,6 +102,8 @@ export const PROJECTS: Project[] = [
     ],
     from: "#7f9bbf",
     to: "#F0EDE5",
+    cover: "/projects/afterword/cover.webp",
+    spiralCover: "/projects/afterword/spiral.webp",
   },
   {
     slug: "waaah",
@@ -94,6 +119,7 @@ export const PROJECTS: Project[] = [
     ],
     from: "#F0C8A8",
     to: "#E8A87C",
+    cover: "/projects/waaah/waaah-hero.webp",
   },
   {
     slug: "fwc",
@@ -109,6 +135,7 @@ export const PROJECTS: Project[] = [
     ],
     from: "#E8002D",
     to: "#8a0b2b",
+    cover: "/projects/fwc/fwc-hero.webp",
   },
   {
     slug: "fero",
@@ -127,6 +154,22 @@ export const PROJECTS: Project[] = [
     cover: "/projects/fero/wordmark.webp",
   },
   {
+    slug: "sk-fitness",
+    name: "SK Fitness Studio",
+    tag: "Gym website · Client work",
+    year: "2026",
+    role: "Design + Build (AI-native)",
+    blurb:
+      "A conversion-first website for a unisex strength & cardio studio in Chinnadharapuram, Karur — built to turn local searches into booked free trials.",
+    body: [
+      "SK Fitness Studio needed more than a listing: a real storefront that answers what a walk-in actually asks — what does it cost, when is it open, and can I try it first. The site leads with a free-trial offer and a WhatsApp tap, then backs it up with programs, zones, schedule and transparent pricing.",
+      "Built AI-native on Base44 and shipped live: a bold gym-poster identity, marquee energy strips, program cards, a two-session daily schedule, four clean pricing tiers, a floor gallery and member stories — all tuned for a phone-first local audience.",
+    ],
+    from: "#e8462a",
+    to: "#171412",
+    cover: "/projects/sk-fitness/skfitness-hero.webp",
+  },
+  {
     slug: "portfolio",
     name: "Cinematic portfolio",
     tag: "Cinematic editor portfolio",
@@ -140,5 +183,6 @@ export const PROJECTS: Project[] = [
     ],
     from: "#d8b48c",
     to: "#a07850",
+    cover: "/projects/portfolio/portfolio-hero.webp",
   },
 ];

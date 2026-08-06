@@ -1,7 +1,9 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import SiteFooter from "@/components/v4/SiteFooter";
 import VisitorCard, { STICKER_ART, STICKER_KEYS } from "./VisitorCard";
+import TiltCard from "./TiltCard";
 import {
   CARD_COLORS,
   MAX_STICKERS,
@@ -179,13 +181,15 @@ export default function GuestbookPage() {
   return (
     <main className="gb-page">
       <header className="gb-head">
-        <p className="gb-eyebrow">The guestbook — visitor log</p>
+        <span className="gb-eyebrow">The guestbook — visitor log</span>
         <h1 className="gb-title">
-          Leave your <em className="scribble">mark</em>.
+          Leave your <em className="scribble">mark</em>
+          <span className="gb-c">©</span>
         </h1>
         <p className="gb-sub">
-          Every visitor gets a pass. Scribble on it, sticker it, make it yours —
-          then pin it to the wall with everyone else’s.
+          Every visitor gets a pass. Scribble on it, sticker it, make it
+          unmistakably yours — then pin it to the wall alongside everyone
+          else’s.
         </p>
       </header>
 
@@ -386,7 +390,7 @@ export default function GuestbookPage() {
         </div>
 
         {wall !== null && wallCount === 0 && !wallError && (
-          <p className="gb-empty">freshly painted — be the first to pin a card.</p>
+          <p className="gb-empty">freshly painted — be the very first to pin a card.</p>
         )}
 
         <div className="gb-wall">
@@ -401,11 +405,15 @@ export default function GuestbookPage() {
                 } as React.CSSProperties
               }
             >
-              <VisitorCard data={c} baseFont={7.5} />
+              <TiltCard>
+                <VisitorCard data={c} baseFont={7.5} />
+              </TiltCard>
             </div>
           ))}
         </div>
       </section>
+
+      <SiteFooter />
     </main>
   );
 }

@@ -146,8 +146,20 @@ const HINTS_DEFAULT: Record<HintKey, HintCfg> = {
   enter: { x: 52.53, y: 84.12, s: 0.8 }, // scroll/continue hint — lower
 };
 
+/* The splash plays once per full page load. This module-scoped flag survives
+   client-side navigations (so returning to Home won't replay it) but resets on
+   a real reload / refresh — exactly when the splash should come back. */
+let splashPlayed = false;
+
 export default function SplashIntro() {
-  const [phase, setPhase] = useState<"show" | "out" | "hidden">("show");
+  // hero-chip align mode (/?chipalign) skips the splash so the hero is reachable
+  const [phase, setPhase] = useState<"show" | "out" | "hidden">(() => {
+    if (typeof window !== "undefined" && new URLSearchParams(window.location.search).has("chipalign")) {
+      return "hidden";
+    }
+    if (splashPlayed) return "hidden"; // already shown this page-load
+    return "show";
+  });
   const [cycling, setCycling] = useState(false);
   const [fi, setFi] = useState(0);
   const [align, setAlign] = useState(false);
@@ -388,6 +400,7 @@ export default function SplashIntro() {
   const leave = () => {
     if (leaving.current || phase !== "show") return;
     leaving.current = true;
+    splashPlayed = true; // don't replay when navigating back to Home
     setPhase("out");
     hideTimer.current = setTimeout(() => setPhase("hidden"), 850);
   };
