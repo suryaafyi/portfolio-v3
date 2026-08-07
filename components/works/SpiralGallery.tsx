@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { PROJECTS, gradient, spiralGradient } from "@/lib/projects";
+import { PROJECTS, gradient } from "@/lib/projects";
 import { ribbonLayout } from "@/lib/ribbon";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { useFlashNav } from "./WorksTransition";
@@ -30,6 +30,7 @@ export default function SpiralGallery() {
   // list view: the project nearest the middle of the screen is the active one
   const [active, setActive] = useState(0);
   const rowEls = useRef<(HTMLButtonElement | null)[]>([]);
+  const switchRef = useRef<HTMLDivElement>(null);
 
   // SCROLL-driven (not hover): media/mark/meta are pinned to the viewport
   // centre, so whichever name scrolls through the middle becomes active.
@@ -51,6 +52,26 @@ export default function SpiralGallery() {
       { rootMargin: "-50% 0px -50% 0px", threshold: 0 }
     );
     rows.forEach((r) => io.observe(r));
+    return () => io.disconnect();
+  }, [view]);
+
+  // the switch pill floats over the list too, but shouldn't sit on top of
+  // the footer once it scrolls into view — spiral view has no footer, so
+  // it just stays visible there.
+  useEffect(() => {
+    const el = switchRef.current;
+    if (!el) return;
+    if (view !== "list") {
+      el.classList.remove("is-hidden");
+      return;
+    }
+    const footer = document.querySelector(".v4-footer");
+    if (!footer) return;
+    const io = new IntersectionObserver(
+      ([entry]) => el.classList.toggle("is-hidden", entry.isIntersecting),
+      { threshold: 0 }
+    );
+    io.observe(footer);
     return () => io.disconnect();
   }, [view]);
 
@@ -313,7 +334,7 @@ export default function SpiralGallery() {
               data-hover
               data-slug={p.slug}
             >
-              <div className="sg-media" style={{ background: spiralGradient(p) }}>
+              <div className="sg-media" style={{ background: gradient(p) }}>
                 <span className="sg-media-name">{p.name}</span>
               </div>
               <div
@@ -389,7 +410,7 @@ export default function SpiralGallery() {
       )}
 
       {/* bottom pill switch, like the reference */}
-      <div className="sg-switch" role="group" aria-label="View mode">
+      <div className="sg-switch" ref={switchRef} role="group" aria-label="View mode">
         <button
           type="button"
           className={view === "spiral" ? "is-on" : ""}

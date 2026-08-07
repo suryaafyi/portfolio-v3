@@ -25,8 +25,8 @@ const TIMELINE = [
   },
   {
     yr: "2026",
-    role: "Product Designer @ Contra Labs",
-    desc: "Accepted into the Contra Labs Network — application bypassed on prior work — now helping shape AI models and tools.",
+    role: "Freelance Product Designer",
+    desc: "Selected freelance engagements — partnering directly with founders, research through to shipped interface.",
     current: true,
   },
   {

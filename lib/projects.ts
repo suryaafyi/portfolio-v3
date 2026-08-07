@@ -11,10 +11,6 @@ export type Project = {
   to: string;
   /** Real cover image (public path) — layered over the gradient when set. */
   cover?: string;
-  /** Optional dedicated crop for the /works spiral's landscape (1.56:1) tile —
-   *  set when `cover` is a portrait shot that centre-crops badly at that ratio
-   *  (e.g. shows mostly empty mockup margin). Falls back to `cover`. */
-  spiralCover?: string;
 };
 
 /** Card media — the cover image when present, else the gradient stops. Used
@@ -27,16 +23,6 @@ export const gradient = (p: Project) =>
 /** Gradient only, never the cover photo — for decorative spots (the /works
  *  spiral, the home wheel) that should stay bold color, not real screenshots. */
 export const gradientOnly = (p: Project) => `linear-gradient(135deg, ${p.from}, ${p.to})`;
-
-/** Card media for the /works spiral tile specifically — prefers a dedicated
- *  spiral crop (see `spiralCover`) over the general `cover`, since the
- *  spiral's card is a wide landscape shape most portrait covers don't fit. */
-export const spiralGradient = (p: Project) => {
-  const src = p.spiralCover ?? p.cover;
-  return src
-    ? `url(${src}) center / cover no-repeat, linear-gradient(135deg, ${p.from}, ${p.to})`
-    : `linear-gradient(135deg, ${p.from}, ${p.to})`;
-};
 
 export const PROJECTS: Project[] = [
   {
@@ -86,7 +72,6 @@ export const PROJECTS: Project[] = [
     from: "#27344a",
     to: "#4A6FA5",
     cover: "/projects/shift/hero.webp",
-    spiralCover: "/projects/shift/spiral.webp",
   },
   {
     slug: "afterword",
@@ -103,7 +88,6 @@ export const PROJECTS: Project[] = [
     from: "#7f9bbf",
     to: "#F0EDE5",
     cover: "/projects/afterword/cover.webp",
-    spiralCover: "/projects/afterword/spiral.webp",
   },
   {
     slug: "waaah",

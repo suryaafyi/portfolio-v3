@@ -152,15 +152,15 @@ export default function SiteChrome() {
       }
       const dock = dockRef.current;
       if (dock) {
-        // visible once past the first screen, but hides again the moment the
-        // home "What I ship" card deck scrolls into view (dock is a discovery
-        // CTA for the top of the page). On pages without a deck it just stays.
+        // visible once past the first screen, hidden again once the shared
+        // footer scrolls into view — the dock is a discovery CTA and
+        // shouldn't overlap the footer's own contact CTA.
         const past = window.scrollY > window.innerHeight * 0.7;
-        const deck = document.querySelector(".v4-deck-outer");
-        const reachedDeck = deck
-          ? deck.getBoundingClientRect().top < window.innerHeight
+        const footer = document.querySelector(".v4-footer");
+        const reachedFooter = footer
+          ? footer.getBoundingClientRect().top < window.innerHeight
           : false;
-        dock.classList.toggle("is-on", past && !reachedDeck);
+        dock.classList.toggle("is-on", past && !reachedFooter);
       }
     };
     onScroll();
@@ -299,12 +299,12 @@ export default function SiteChrome() {
         Chennai, India <strong>{clock}</strong>
       </div>
 
-      {/* discovery-call dock — floats in once you scroll past the first screen.
-          Skipped on /works: that page has its own bottom-centre view switch. */}
+      {/* discovery-call dock — floats in once you scroll past the first screen,
+          hides again at the footer. Shown on Home and Contact only. */}
       <div
         className="v4-dock"
         ref={dockRef}
-        hidden={pathname === "/works"}
+        hidden={pathname !== "/" && pathname !== "/contact"}
       >
         <span>Book a free discovery call</span>
         <a href={CAL} target="_blank" rel="noopener noreferrer" className="v4-dock-btn">
