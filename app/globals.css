@@ -995,9 +995,6 @@ a {
   left: 12px;
   bottom: 12px;
 }
-/* video: caption sits top-left so it clears the playback controls */
-.cs-video { background: #2b2118; }
-.cs-video span { top: 12px; bottom: auto; }
 .cs-image span {
   font-family: var(--font-space-mono), monospace;
   font-size: 12px;
@@ -1007,6 +1004,35 @@ a {
   background: rgba(255, 255, 255, 0.85);
   padding: 8px 16px;
   border-radius: 20px;
+}
+
+/* video: framed media with the caption BELOW it (never overlapping the
+   playback controls) */
+.cs-video { margin: 0; }
+.cs-video .cs-video-media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #14120f;
+  box-shadow: 0 24px 50px -28px rgba(28, 37, 51, 0.5);
+}
+.cs-video .cs-video-media video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.cs-video figcaption {
+  margin-top: 12px;
+  font-family: var(--font-space-mono), monospace;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(28, 37, 51, 0.62);
 }
 
 .cs-voices { display: flex; flex-direction: column; gap: 16px; }

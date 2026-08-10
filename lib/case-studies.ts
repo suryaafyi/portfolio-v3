@@ -1098,6 +1098,145 @@ export const CASE_STUDIES: Record<string, CaseStudy> = {
     ],
   },
 
+  yearbook: {
+    slug: "yearbook",
+    title: "Yearbook — Spotify Wrapped, From a Spreadsheet",
+    accent: "#7c3aed", // electric violet — neon-party accent
+    heroBg: "#0B0A0F", // near-black stage ground
+    heroText: "light",
+    year: "2026",
+    kind: "full",
+    meta: {
+      role: "Solo: design + build (AI-native workflow)",
+      team: "Solo project",
+      timeline: "2026 · Replit Buildathon",
+      skills: "AI-Native Design, Three.js / WebGL, Design Systems, React + Postgres, Motion & Interaction",
+    },
+    tags: ["AI Workflow", "Three.js", "Design System", "Year-in-Review"],
+    links: [
+      { label: "Open Yearbook", href: "https://yearbook--suryaafyi.replit.app" },
+    ],
+    sections: [
+      {
+        num: "01",
+        eyebrow: "Context",
+        heading: "The most-shared product moment of the year, made forkable.",
+        blocks: [
+          { type: "paragraph", text: "Every year Spotify Wrapped becomes the internet's favourite screenshot — and every company quietly wants one. They either build it from scratch or pay an agency five figures. Yearbook makes it a spreadsheet upload: drop in a CSV, map five columns, pick a visual world, and every row becomes its own cinematic, tap-through year-in-review at a private link." },
+          { type: "callout", text: "Spreadsheet in, a personalised cinematic recap out — one per person, each at their own private link." },
+          { type: "image", caption: "One recipient's finished story — opener, headline stat, top five, persona and share card, all in the Chroma world.", src: "/projects/yearbook/story.webp" },
+        ],
+      },
+      {
+        num: "02",
+        eyebrow: "The Brief",
+        heading: "A template worth forking, not just a demo.",
+        blocks: [
+          { type: "paragraph", text: "Built for the Replit Buildathon — a competition to stock the launch of Template Sharing. The scoring question wasn't 'most impressive build'; it was 'would someone fork this and run it under their own name on Monday?' That reframed everything: the win goes to a genuinely useful, richly interactive app, built on real integrations, that ships its own design system." },
+          {
+            type: "cards",
+            items: [
+              { title: "Rich & interactive", text: "A builder, a live story player, and a shareable output — more than one screen by design." },
+              { title: "Connected", text: "Load data from a public Google Sheet, a CSV upload, pasted text, or one-tap demo data." },
+              { title: "Bundled design system", text: "Six complete visual worlds that swap from a single data attribute — the system is the product." },
+            ],
+          },
+        ],
+      },
+      {
+        num: "03",
+        eyebrow: "The Insight",
+        heading: "People fork what they'll operate under their own name.",
+        blocks: [
+          { type: "paragraph", text: "Digging into the gallery's public remix counts, one pattern held: the templates that got forked 60+ times all had an empty slot that wasn't code — you point them at your own content and it becomes your product. Finished tools got viewed thousands of times and forked a handful. So Yearbook was built as a scaffold, not a finished toy: the remixer brings their own data and brand, and what they run afterward is theirs." },
+          { type: "pullQuote", text: "Views measure the screenshot. Forks measure whether there's a hole shaped like the person forking it." },
+        ],
+      },
+      {
+        num: "04",
+        eyebrow: "The Concept",
+        heading: "Four ways in, one cinematic way out.",
+        blocks: [
+          { type: "paragraph", text: "The builder normalises every data source into the same shape, so everything downstream stays identical. Load your data, map five story fields, generate — and every row gets an unguessable private link to its own full-screen, tap-through recap." },
+          {
+            type: "list",
+            items: [
+              "Paste raw CSV, upload a .csv/.tsv (read client-side, never stored), connect a public Google Sheet, or load demo data in one tap.",
+              "Map five columns: display name, headline number, headline label, ranking items, and a persona label.",
+              "Pick a visual world and an accent colour — your whole brand lands without touching code.",
+              "Generate: each row becomes a private /r/<token> story with a share card and a video download.",
+            ],
+          },
+          { type: "image", caption: "The four-step builder — bring your data, map your fields, pick a vibe, get your links.", src: "/projects/yearbook/builder.webp" },
+        ],
+      },
+      {
+        num: "05",
+        eyebrow: "The Design System",
+        heading: "Six worlds, one line to swap them.",
+        blocks: [
+          { type: "paragraph", text: "The signature is six complete visual worlds — each a real Three.js scene, not a CSS gradient pretending to be 3D. Every world re-skins from a single data attribute on the body tag, so the entire design system swaps in one line. That is the 'bundled design system' requirement answered as a product feature rather than a compliance page." },
+          {
+            type: "cards",
+            items: [
+              { title: "Chroma", text: "A noise-displaced sphere behind blurred neon." },
+              { title: "Gradient Party", text: "Flowing gradient ribbons and bold geometric shapes." },
+              { title: "Liquid", text: "A sine-displaced plane in saturated colour fields." },
+              { title: "Chrome", text: "A mirror torus knot; the environment re-tints every slide." },
+              { title: "Prism", text: "Iridescent glass with chromatic dispersion." },
+              { title: "Metal", text: "Your headline extruded into 3D under a raking spotlight." },
+            ],
+          },
+          { type: "image", caption: "The same recap in the Gradient Party world — flowing ribbons and bold geometric shapes, all real Three.js.", src: "/projects/yearbook/world-gradient.webp" },
+        ],
+      },
+      {
+        num: "06",
+        eyebrow: "The Build",
+        heading: "Cheap plumbing, hand-tuned craft.",
+        blocks: [
+          { type: "paragraph", text: "Built AI-native on Replit with a deliberate split: let the agent handle the plumbing it's great at — parsing, storage, routing — and keep every aesthetic decision hand-authored, because that's where AI slop creeps in. The visual layer went in as finished, hand-written code the agent was told to reuse verbatim, not redesign." },
+          {
+            type: "cards",
+            items: [
+              { title: "Stack", text: "React + Express + Postgres (Drizzle), papaparse for parsing, Three.js for the worlds, nanoid for private tokens." },
+              { title: "Data adapters", text: "One shared normalise function behind four sources — paste, upload, Google Sheet CSV export, and demo." },
+              { title: "Anti-slop workflow", text: "The agent built plumbing in plain HTML; the design was pasted in as a reference file and reused wholesale." },
+            ],
+          },
+          { type: "callout", text: "Built solo on the free plan — ran out of credits twice — by spending them only on the code the agent had to invent, never on aesthetics." },
+        ],
+      },
+      {
+        num: "07",
+        eyebrow: "Craft Details",
+        heading: "The details that make it feel considered.",
+        blocks: [
+          { type: "paragraph", text: "The parts I'm quietly proud of are the ones a judge only notices when they're missing:" },
+          {
+            type: "list",
+            items: [
+              "The persona headline measures each word's rendered width and auto-fits its type, so a long label never clips — on any typeface, in any world.",
+              "Colour and motion both change per slide, so five slides never feel like one screen on repeat.",
+              "Everything renders client-side — no video pipeline, no per-user render queue.",
+              "Mobile-first, respects reduced-motion, and every world falls back to a CSS gradient if WebGL is unavailable.",
+            ],
+          },
+          { type: "video", caption: "A full recipient story, start to finish — tap-through, auto-advancing, one private link.", src: "/projects/yearbook/walkthrough.webm" },
+        ],
+      },
+      {
+        num: "08",
+        eyebrow: "Reflection",
+        heading: "A design system you can watch move.",
+        blocks: [
+          { type: "paragraph", text: "Yearbook is the clearest argument I've made that a design system can be the product, not the documentation. Six art-directed worlds you can flip between in real time is a better answer to 'ship a design system' than any spec page — because the thing that makes it good is exactly the thing a generated system can't fake: taste, held consistent across six completely different visual languages." },
+          { type: "pullQuote", text: "The whole design system swaps on one attribute — six worlds, one line. That's the pitch and the product at once." },
+        ],
+      },
+    ],
+  },
+
   fwc: {
     slug: "fwc",
     title: "We Are 26 — A FIFA World Cup 2026 Live Dashboard",

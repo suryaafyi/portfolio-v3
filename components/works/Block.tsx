@@ -137,9 +137,11 @@ export default function Block({ block, accent }: { block: BlockType; accent: str
 
     case "video":
       return (
-        <figure className="cs-image has-img cs-video">
-          <video src={block.src} poster={block.poster} controls muted loop playsInline preload="metadata" />
-          <span>{block.caption}</span>
+        <figure className="cs-video">
+          <div className="cs-video-media">
+            <video src={block.src} poster={block.poster} controls muted loop playsInline preload="metadata" />
+          </div>
+          <figcaption>{block.caption}</figcaption>
         </figure>
       );
 

@@ -106,6 +106,22 @@ export const PROJECTS: Project[] = [
     cover: "/projects/waaah/waaah-hero.webp",
   },
   {
+    slug: "yearbook",
+    name: "Yearbook",
+    tag: "Year-in-review engine · AI",
+    year: "2026",
+    role: "Solo: design + build (AI-native)",
+    blurb:
+      "Spotify Wrapped, from a spreadsheet. Upload a CSV, map five columns, pick a visual world — and every row becomes its own cinematic tap-through recap at a private link. Six real Three.js worlds, one design system that swaps in a single line. Built solo for the Replit Buildathon.",
+    body: [
+      "Yearbook turns a spreadsheet into a personalised, cinematic year-in-review for every person in it — the Spotify Wrapped moment, made forkable. Paste a CSV, upload a file, or connect a public Google Sheet; map your columns; pick a world; and every row gets its own tap-through story at a private link, with a share card and a video download.",
+      "The signature is six complete visual worlds — each a real Three.js scene, not a CSS gradient — and the whole design system re-skins from a single data attribute. Built solo, AI-native, across two credit blackouts, for the Replit Buildathon.",
+    ],
+    from: "#2a1a5e",
+    to: "#e4ff3a",
+    cover: "/projects/yearbook/cover.webp",
+  },
+  {
     slug: "fwc",
     name: "We Are 26",
     tag: "FIFA 2026 · Live Dashboard",
