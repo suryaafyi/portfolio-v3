@@ -586,8 +586,8 @@ export default function V4Home() {
         </div>
 
         <p className="v4-lede">
-          Brands that stick. Interfaces that convert. Code that doesn&apos;t cut
-          corners — designed and shipped by one person, start to finish.
+          Brands that hit different. Interfaces built to convert, not just look good. 
+          Code with no cut corners — solo, start to finish, aura intact.
         </p>
 
         {/* in-flow, centred: the "Book an intro call" callrow */}
