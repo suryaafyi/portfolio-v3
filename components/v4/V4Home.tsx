@@ -132,8 +132,8 @@ const FAN: {
     v: "cream",
     rot: -12,
     q: "Working with Surya felt like hiring an entire studio. One person, full pipeline — brand, site, launch assets, all pulling the same direction.",
-    n: "Meera Krishnan",
-    r: "Founder @Petalbox",
+    n: "Avantika",
+    r: "Founder, seed-stage startup (NDA)",
     tag: "M",
     bg: "#e8002d",
     fg: "#fbf9ef",
@@ -143,7 +143,7 @@ const FAN: {
     rot: -6,
     q: "He found the exact spot where users were getting lost, showed us the data, and designed it away. Support tickets dropped by half — almost overnight.",
     n: "Daniel Osei",
-    r: "PM @Traceline",
+    r: "Product Manager, B2B SaaS company (NDA)",
     tag: "D",
     bg: "#f0c8a8",
     fg: "#171412",
@@ -153,7 +153,7 @@ const FAN: {
     rot: 2,
     q: "The site he shipped feels like a product reveal, not a website. Fast, smooth, pixel-faithful to the design — because he built both halves himself.",
     n: "Sofia Marchetti",
-    r: "CMO @Brightfold",
+    r: "CMO, early-stage startup (NDA)",
     tag: "S",
     bg: "#4a6fa5",
     fg: "#fbf9ef",
@@ -162,8 +162,8 @@ const FAN: {
     v: "taupe",
     rot: 7,
     q: "We asked for a prototype by Friday. He shipped a working build by Wednesday — animations included, unprompted.",
-    n: "Arjun Nair",
-    r: "CEO @Kindling",
+    n: "Niklas",
+    r: "CEO, early-stage startup (NDA)",
     tag: "A",
     bg: "#ef8632",
     fg: "#171412",
@@ -171,9 +171,9 @@ const FAN: {
   {
     v: "cream",
     rot: 13,
-    q: "Every pixel had a reason behind it. Our investors noticed the deck; our users noticed absolutely everything else.",
-    n: "Elena Petrova",
-    r: "Co-founder @Harborlight",
+    q: "Surya built us an amazing site — and the AI chatbot he added has been huge. It handles session bookings and answers customer questions on its own now. That was a massive problem for us before, and it's basically solved",
+    n: "Guhan",
+    r: "Manager, SK Fitness Studio",
     tag: "E",
     bg: "#3d2fa9",
     fg: "#fbf9ef",
@@ -571,7 +571,7 @@ export default function V4Home() {
               I design it<span className="v4-c">©</span>
             </span>
           </span>
-          <span className="v4-mask"><span className="v4-hline">I build it.</span></span>
+          <span className="v4-mask"><span className="v4-hline">I build it too.</span></span>
           <span className="v4-mask"><span className="v4-hline">Nothing in between.</span></span>
         </h1>
 

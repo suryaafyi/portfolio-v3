@@ -145,15 +145,15 @@ export default function AboutPage() {
         <span className="abv-eyebrow">About</span>
         <h1 className="abv-title">
           <span className="abv-mask">
-            <span className="abv-hline">Engineer first,</span>
+            <span className="abv-hline">Designer now,</span>
           </span>
           <span className="abv-mask">
             <span className="abv-hline">
-              designer<span className="abv-c">©</span>
+              engineer<span className="abv-c">©</span>
             </span>
           </span>
           <span className="abv-mask">
-            <span className="abv-hline">on purpose.</span>
+            <span className="abv-hline">before that.</span>
           </span>
         </h1>
         <p className="abv-lede">
